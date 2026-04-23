@@ -1,0 +1,34 @@
+% Given values
+A = 2; B = 2; C = 4; D = 8; E = 4; F = 8; G = 3; H = 3;
+
+% Compute amplitudes
+A1 = A + B + H;  % 7
+A2 = B + C + H;  % 9
+s = (C + D + H) / 30; % 0.5
+
+% Compute frequencies
+f1 = (C + D + H) * 100;  % 1500 Hz
+f2 = (D + E + H) * 100;  % 1500 Hz
+
+% Time vector
+fs = 10 * f1;  
+t = 0:1/fs:0.01; 
+
+% Generate original signal (without noise)
+signal_clean = A1 * sin(2 * pi * f1 * t) + A2 * cos(2 * pi * f2 * t);
+
+% Generate noise
+noise = s * randn(size(t));
+
+% Generate noisy signal
+x = signal_clean + noise;
+
+% Calculate power of signal and noise
+P_signal = mean(signal_clean.^2);  
+P_noise = mean(noise.^2);          
+
+% Compute SNR
+SNR_dB = 10 * log10(P_signal / P_noise);
+
+% Display SNR value
+fprintf('SNR Value: %.2f dB\n', SNR_dB);
